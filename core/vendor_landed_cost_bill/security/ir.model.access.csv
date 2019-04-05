@@ -1,2 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_vendor_landed_cost_bill_vendor_landed_cost_bill,vendor_landed_cost_bill.vendor_landed_cost_bill,model_vendor_landed_cost_bill_vendor_landed_cost_bill,,1,0,0,0

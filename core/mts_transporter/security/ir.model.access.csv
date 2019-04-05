@@ -1,2 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_mts_transporter_mts_transporter,mts_transporter.mts_transporter,model_mts_transporter_mts_transporter,,1,0,0,0
