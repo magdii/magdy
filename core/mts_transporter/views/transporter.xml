@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="vendor_transporter" model="ir.actions.act_window">
+            <field name="name">Transporter</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('transpoter', '=', True)]</field>
+        </record>
+
+        <record id="transporter_bill_action" model="ir.actions.act_window">
+            <field name="name">Transporter Bill</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.invoice</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('transporter', '=', True)]</field>
+        </record>
+
+        <!--<record id="vendor_transporter" model="ir.actions.act_window">-->
+            <!--<field name="name">Transporter</field>-->
+            <!--<field name="type">ir.actions.act_window</field>-->
+            <!--<field name="res_model">res.partner</field>-->
+            <!--<field name="view_mode">tree,form</field>-->
+            <!--<field name="domain">[('transpoter', '=', True)]</field>-->
+        <!--</record>-->
+
+        <menuitem id="transporter_root" name="Transporter" />
+        <menuitem id="transporter_vendors" name="Transporter" action="vendor_transporter"  parent="transporter_root" />
+        <menuitem id="transporter_bill" name="Transporter Bill" action="transporter_bill_action"  parent="transporter_root" />
+        <!--<menuitem id="transporter_payment" name="Transporter Payment" action=""  parent="transporter_root" />-->
+
+    </data>
+</odoo>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="stock_landed_form_inherit" model="ir.ui.view">
+            <field name="name">stock.landed.cost</field>
+            <field name="model">stock.landed.cost</field>
+            <field name="inherit_id" ref="stock_landed_costs.view_stock_landed_cost_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='cost_lines']//tree//field[@name='product_id']" position="attributes">
+                    <attribute name="required">False</attribute>
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='cost_lines']//tree//field[@name='account_id']" position="after">
+                    <field name="analytic_account_id" />
+                </xpath>
+                <xpath expr="//field[@name='cost_lines']//form//field[@name='account_id']" position="after">
+                    <field name="analytic_account_id" />
+                </xpath>
+
+            </field>
+        </record>
+
+    <record id="stock_picking_form_inherit" model="ir.ui.view">
+        <field name="name">stock.picking.form</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+
+          <xpath expr="//button[@name='action_cancel']" position="after">
+               <button name="Create_Transporter_Bill" string="Create Transporter Bill" type="object"
+                       class="oe_highlight"
+                       attrs="{'invisible': ['|', ('is_bill','=', True),
+                                                       ('picking_type_code','!=','incoming')
+                                                       ]}" />
+              <button name="Create_landed_cost" string="Create landed Cost" type="object"
+                       class="oe_highlight"
+                       attrs="{'invisible': [('is_landed','=', True)]}" />
+              <!--attrs="{'invisible': ['&amp;',('state','!=','done'),('type','!=','third_party_truck')]}"-->
+          </xpath>
+          <xpath expr="//group" position="after">
+            <group attrs="{'invisible': [('picking_type_code','not in', ['incoming', 'internal'])]}">
+                 <group>
+                     <field name="type"/>
+                     <field name="freight_type" attrs="{'invisible':[('is_third','=',True)]}"/>
+                     <field name="Transporter_id" attrs="{'invisible':[('is_third','=',True)],
+                                                           'required':[('is_third','=',False)]}"/>
+                     <field name="supplier_freight" attrs="{'invisible':[('is_third','=',True)]}"/>
+                     <field name="bill_reference" attrs="{'invisible':[('is_third','=',True)]}"/>
+                 </group>
+                 <group>
+                     <field name="is_third" invisible="1"/>
+                     <field name="is_landed" invisible="1"/>
+                     <field name="bill_state" invisible="1" />
+                     <field name="is_bill" invisible="1"/>
+                     <field name="landed_cost_id" readonly="1"/>
+                     <field name="transporter_account_id" attrs="{'invisible':[('is_third','=',True)]}"/>
+                     <field name="driver_name" attrs="{'invisible':[('is_third','=',True)]}"/>
+                     <field name="driver_mobile_no" attrs="{'invisible':[('is_third','=',True)]}"/>
+                     <field name="vehicle_no" attrs="{'invisible':[('is_third','=',True)],
+                                                      'required':[('is_third','=',False)]}"/>
+                 </group>
+            </group>
+          </xpath>
+
+        </field>
+    </record>
+
+    </data>
+</odoo>
