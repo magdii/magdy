@@ -1,0 +1,4 @@
+[submodule "magdii/magdy"]
+	path = magdii/magdy
+	url = git@github.com:magdii/magdy.git
+	branch = master
