@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="delivery_method_wizard" model="ir.ui.view">
+            <field name="name">delivery.method.wizard</field>
+            <field name="model">delivery.method.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Delivery Method">
+                    <sheet>
+                    <label string="Delivery Method"/>
+                    <group>
+                        <group>
+                            <field name="from_city"/>
+                            <field name="to_city"/>
+                            <field name="unit"/>
+                        </group>
+                        <group>
+                            <field name="product_id"/>
+                            <field name="price"/>
+                            <field name="partner_transporter_id"/>
+                        </group>
+                    </group>
+
+                    <footer>
+                        <button name="create_delivery_method_invoice" string="Create Invoice" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_delivery_method_menu" model="ir.actions.act_window">
+            <field name="name">Delivery Method</field>
+            <field name="res_model">delivery.method.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="delivery_method_wizard"/>
+            <field name="target">new</field>
+        </record>
+
+        <!--<menuitem id="menu_action_wizard_action_employee_payslip_technician" action="action_stock_card_report_menu"-->
+                  <!--string = 'Stock Card Report' parent="stock.menu_warehouse_report" sequence="10"/>-->
+
+    </data>
+</openerp>

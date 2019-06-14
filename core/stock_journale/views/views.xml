@@ -1,0 +1,60 @@
+<odoo>
+  <data>
+    <record id="stock_quant_form_inherit2" model="ir.ui.view">
+           <field name="name">stock.quant.form</field>
+           <field name="model">stock.quant</field>
+           <field name="inherit_id" ref="stock.view_stock_quant_form"/>
+           <field name="arch" type="xml">
+
+               <xpath expr="//field[@name='qty']" position="after">
+                   <field name="is_quant"/>
+                   <!--invisible="1"-->
+                   <field name="stock_qty"/>
+               </xpath>
+
+           </field>
+       </record>
+
+        <record id="product_template_only_form_view2" model="ir.ui.view">
+        <field name="name">product.template.form</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+
+           <xpath expr="//field[@name='type']" position="after">
+               <field name="average_product_price2"/>
+           </xpath>
+
+        </field>
+        </record>
+
+      <!--<record id="crm_case_form_view_oppor_inheri" model="ir.ui.view">-->
+           <!--<field name="name">crm.lead.form</field>-->
+           <!--<field name="model">crm.lead</field>-->
+           <!--<field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>-->
+           <!--<field name="arch" type="xml">-->
+
+               <!--<xpath expr="//button[@name=%(crm.crm_lead_lost_action)d]" position="replace">-->
+
+                   <!--<button name="mark_lost_new" string="Mark lost"-->
+                           <!--type="object" class="oe_highlight"-->
+                           <!--attrs="{'invisible': [('active', '=', False),('probability', '&lt;', 100)]}"/>-->
+               <!--</xpath>-->
+
+           <!--</field>-->
+       <!--</record>-->
+
+      <!--<record id="stock_quant_tree_inherit" model="ir.ui.view">-->
+          <!--<field name="name">stock.quant.tree</field>-->
+          <!--<field name="model">stock.quant</field>-->
+          <!--<field name="inherit_id" ref="stock.view_stock_quant_tree"/>-->
+          <!--<field name="arch" type="xml">-->
+
+              <!--<xpath expr="//field[@name='inventory_value']" position="replace">-->
+                  <!--<field name="inventory_value" />-->
+              <!--</xpath>-->
+
+          <!--</field>-->
+      <!--</record>-->
+  </data>
+</odoo>

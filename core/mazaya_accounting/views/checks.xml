@@ -1,0 +1,251 @@
+<odoo>
+    <data>
+
+        <record id="view_account_check_form" model="ir.ui.view">
+            <field name="name">Checks</field>
+            <field name="model">account.check</field>
+            <field name="arch" type="xml">
+                <form string="account check">
+                    <header>
+                        <button name="action_new" string="Set to new" attrs="{'invisible':[('check_state','=','new')]}"
+                                type="object" class="oe_highlight"/>
+
+                        <button name="action_done" string="Revision Done"
+                                attrs="{'invisible':[('check_state','=','revision_done')]}"
+                                type="object" class="oe_highlight"/>
+
+                        <field name="check_state" widget="statusbar" statusbar_visible="new,revision_done"/>
+                    </header>
+                    <sheet>
+
+                        <group>
+                            <group>
+                                <field name="name" attrs="{'readonly':[('check_state','=','revision_done')]}"/>
+                                <field name="partner_id" attrs="{'readonly':[('check_state','=','revision_done')]}"/>
+                                <field name="financial_type"
+                                       attrs="{'readonly':[('check_state','=','revision_done')]}"/>
+                                <field name="journal_id" attrs="{'readonly':[('check_state','=','revision_done')]}"/>
+                            </group>
+                            <group>
+                                <field name="sale_id" attrs="{'readonly':[('check_state','=','revision_done')]}"/>
+                                <field name="sale_order_amount"/>
+                                <field name="start_serial" attrs="{'readonly':[('check_state','=','revision_done')]}"/>
+                                <field name="strat_date" attrs="{'readonly':[('check_state','=','revision_done')]}"/>
+                                <field name="bank_id" attrs="{'readonly':[('check_state','=','revision_done')]}"/>
+                                <button name="update_check_serial_date" string="Update Serial"
+                                        type="object" class="oe_highlight"
+                                        attrs="{'invisible':[('check_state','=','revision_done')]}"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Checks">
+                                <field name="checks_line_ids"
+                                       attrs="{'readonly':[('check_state','=','revision_done')]}">
+                                    <tree editable="bottom">
+                                        <field name="partner_id" invisible="1"/>
+                                        <field name="sale_id" invisible="1"/>
+                                        <field name="name"/>
+                                        <field name="amount" sum="Total"/>
+                                        <field name="partner_id" invisible="1"/>
+                                        <field name="bank_id"/>
+                                        <field name="due_date"/>
+                                        <field name="state" readonly="1"/>
+                                        <field name="check_state" invisible="1"/>
+                                        <!--<button name="action_in_safe" string="In Safe"-->
+                                        <!--attrs="{'readonly':[('check_state','=','new')]}"-->
+                                        <!--type="object" class="oe_highlight" states="new,returned"-->
+                                        <!--groups="mazaya_accounting.group_check_manager"/>-->
+                                        <!--<button name="action_in_bank" string="Bank"-->
+                                        <!--groups="mazaya_accounting.group_check_manager"-->
+                                        <!--type="object" class="oe_highlight" states="in_safe"/>-->
+                                        <!--<button name="create_invoice" string="paied"-->
+                                        <!--groups="mazaya_accounting.group_check_manager"-->
+                                        <!--type="object" class="oe_highlight" states="in_bank"/>-->
+                                        <!--<button name="action_returned" string="Returned"-->
+                                        <!--groups="mazaya_accounting.group_check_manager"-->
+                                        <!--type="object" class="oe_highlight" states="paied"/>-->
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_account_check_tree" model="ir.ui.view">
+            <field name="name">Checks</field>
+            <field name="model">account.check</field>
+            <field name="arch" type="xml">
+                <tree string="Account check">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="financial_type"/>
+                    <field name="sale_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_account_check_line_form" model="ir.ui.view">
+            <field name="name">Checks Line</field>
+            <field name="model">account.check.line</field>
+            <field name="arch" type="xml">
+                <form string="Account Check Line">
+                    <sheet>
+                        <group>
+                            <field name="partner_id" invisible="1"/>
+                            <field name="sale_id" invisible="1"/>
+                            <field name="name" readonly="1"/>
+                            <field name="partner_id" readonly="1"/>
+                            <field name="amount" readonly="1"/>
+                            <field name="bank_id" readonly="1"/>
+                            <field name="due_date" readonly="1"/>
+                            <field name="check_state" invisible="1"/>
+                        </group>
+                        <group>
+                            <group colspan="2">
+                                <field name="state"/>
+                            </group>
+                            <group colspan="2">
+                                <field name="check_dep_journal_id" attrs="{'invisible':[('state','!=','in_safe')]}"/>
+                                <field name="note_recev_account_id" attrs="{'invisible':[('state','!=','in_safe')]}"/>
+                                <button name="action_check_deposit" string="Check Deposit"
+                                        attrs="{'invisible':[('state','!=','in_safe')]}"
+                                        type="object" class="oe_highlight"/>
+                            </group>
+                            <group colspan="4">
+                                <group>
+                                    <field name="check_paid_journal_id"
+                                           attrs="{'invisible':[('state','!=','check_deposit')]}"/>
+                                    <field name="paid_account_id"
+                                           attrs="{'invisible':[('state','!=','check_deposit')]}"/>
+                                    <button name="action_check_paid" string="Check Paid"
+                                            attrs="{'invisible':[('state','!=','check_deposit')]}"
+                                            type="object" class="oe_highlight"/>
+                                </group>
+                                <group>
+                                    <field name="check_returned_journal_id"
+                                           attrs="{'invisible':[('state','!=','check_deposit')]}"/>
+                                    <field name="returned_account_id"
+                                           attrs="{'invisible':[('state','!=','check_deposit')]}"/>
+                                    <button name="action_check_returned" string="Check Returned"
+                                            attrs="{'invisible':[('state','!=','check_deposit')]}"
+                                            type="object" class="oe_highlight"/>
+                                </group>
+                            </group>
+                        </group>
+
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_account_check_line_tree" model="ir.ui.view">
+            <field name="name">check_line</field>
+            <field name="model">account.check.line</field>
+            <field name="arch" type="xml">
+                <tree string="All Checks">
+                    <field name="checks_id" readonly="1"/>
+                    <field name="name" readonly="1"/>
+                    <field name="partner_id" readonly="1"/>
+                    <field name="due_date" readonly="1"/>
+                    <field name="amount" readonly="1"/>
+                    <field name="check_state" readonly="1"/>
+                    <!--<button name="action_in_safe" string="In Safe" attrs="{'readonly':[('check_state','=','new')]}"-->
+                    <!--type="object" class="oe_highlight" states="new,returned"-->
+                    <!--groups="mazaya_accounting.group_check_manager"/>-->
+                    <!--<button name="action_in_bank" string="Bank" groups="mazaya_accounting.group_check_manager"-->
+                    <!--type="object" class="oe_highlight" states="in_safe"/>-->
+                    <!--<button name="create_invoice" string="paied" groups="mazaya_accounting.group_check_manager"-->
+                    <!--type="object" class="oe_highlight" states="in_bank"/>-->
+                    <!--<button name="action_returned" string="Returned" groups="mazaya_accounting.group_check_manager"-->
+                    <!--type="object" class="oe_highlight" states="paied"/>-->
+                    <field name="state" widget="statusbar" clickable="True"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_all_checks_filter" model="ir.ui.view">
+            <field name="name">all.checks.search</field>
+            <field name="model">account.check.line</field>
+            <field name="arch" type="xml">
+                <search string="All Checks">
+                    <filter string="Today" name="today" domain="[('due_date', '&gt;=', datetime.datetime.now().strftime('%Y-%m-%d
+                00:00:00')),('due_date', '&lt;=',datetime.datetime.now().strftime('%Y-%m-%d 23:23:59'))]"/>
+                    <filter string="This Week" name="this_week"
+                            domain="['&amp;', ('due_date', '&gt;=', context_today().strftime('%Y-%m-%d')),
+                                     ('due_date', '&lt;=', (context_today()+datetime.timedelta(days=7)).strftime('%Y-%m-%d'))
+                            ]"/>
+                    <filter string="This Month" name="current_month"
+                            domain="[('due_date','&lt;',(context_today()+relativedelta(months=1)).strftime('%%Y-%%m-01')), ('due_date','&gt;=',time.strftime('%%Y-%%m-01'))]"/>
+                    <filter string="This Year" name="thisyear"
+                            domain="[('due_date','&gt;=',time.strftime('%%Y-01-01'))]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Document" domain="[]" context="{'group_by':'checks_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
+        <record id="account_check_action" model="ir.actions.act_window">
+            <field name="name">Checks</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.check</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <record id="account_check_line_action1" model="ir.actions.act_window">
+            <field name="name">All Checks</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.check.line</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_all_checks_filter"/>
+        </record>
+
+        <record id="account_returned_check_line_action" model="ir.actions.act_window">
+            <field name="name">Returned Checks inventory</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.check.line</field>
+            <field name="view_mode">tree</field>
+            <field name="domain">[('state','=','returned')]</field>
+        </record>
+
+        <record id="seq_account_check" model="ir.sequence">
+            <field name="name">account_check</field>
+            <field name="code">account_check</field>
+            <field name="prefix">CH</field>
+            <field name="padding">3</field>
+        </record>
+
+        <record id="r_seq_account_check" model="ir.sequence">
+            <field name="name">r_account_check</field>
+            <field name="code">r_account_check</field>
+            <field name="prefix">RCH</field>
+            <field name="padding">3</field>
+        </record>
+
+        <record id="g_seq_account_checkG" model="ir.sequence">
+            <field name="name">g_account_check</field>
+            <field name="code">g_account_check</field>
+            <field name="prefix">GCH</field>
+            <field name="padding">3</field>
+        </record>
+
+
+        <!-- This Menu Item Must have a parent -->
+        <menuitem id="check_menu" name="Checks" parent="account.menu_finance" sequence="5"/>
+        <menuitem id="checks_check_menu" name="Checks" parent="check_menu" sequence="1" action="account_check_action"/>
+        <menuitem id="checks_inventory_menu" name="All Checks" parent="check_menu" sequence="2"
+                  action="account_check_line_action1"/>
+        <menuitem id="checks_returned_inventory_menu" name="Returned Checks Inventory" parent="check_menu" sequence="4"
+                  action="account_returned_check_line_action"/>
+    </data>
+</odoo>

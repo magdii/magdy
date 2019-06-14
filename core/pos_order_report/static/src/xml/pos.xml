@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-extend="ActionpadWidget">
+        <t t-jquery="div.actionpad" t-operation="before">
+            <div class='control-button orders-history'>
+                 <input type="text" name="fname" id="input_text_element" />
+
+                <!--<button type="button"-->
+                        <!--onclick="document.getElementById('demo').innerHTML = Date()">-->
+                        <!--Click me to display Date and Time.</button>-->
+                        <!--<p id="demo"></p>-->
+                <!--<button onclick="myFunction()">Alert</button>-->
+
+                <!--<script>-->
+                <!--function myFunction() {-->
+                  <!--alert("I am an alert box!");-->
+                <!--}-->
+                <!--</script>-->
+            </div>
+        </t>
+    </t>
+</templates>

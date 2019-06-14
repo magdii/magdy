@@ -1,0 +1,37 @@
+<openerp>
+    <data>
+        <record id="sale_wizard_report_form_view2" model="ir.ui.view">
+            <field name="name">account.wizard</field>
+            <field name="model">account.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Report Wizard ">
+                        <group>
+                            <field name="Transporter_id"/>
+                            <!--<field name="partner_id"/>-->
+                            <field name="date_from" required="1"/>
+                            <field name="date_to"/>
+                            <field name="state"/>
+                        </group>
+
+                    <footer>
+                        <button name="check_report" string="Print" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_view_sale_wizard" model="ir.actions.act_window">
+            <field name="name">account Wizard</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="sale_wizard_report_form_view2"/>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="sale_wizard_reports" name="Vendor Bill Report" parent="sales_team.menu_sales"
+                  action="action_view_sale_wizard"/>
+    </data>
+</openerp>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <act_window
+      id="res_partner_action"
+      name="Res Partner"
+      res_model="res.partners"
+    />
+    <menuitem
+        id="res_partner_menu"
+        name="Res Partner"
+        action="res_partner_action"
+        parent=""
+        sequence="5" />
+    <record id="res_partner_view_form" model="ir.ui.view">
+      <field name="name">res partner Form</field>
+      <field name="model">res.partners</field>
+      <field name="arch" type="xml">
+        <form>
+          <group>
+            <field name="email"/>
+            <field name="name"/>
+            <field name="date" />
+            <field name="is_company" />
+            <field name="parent_id" />
+            <field name="child_ids" />
+          </group>
+        </form>
+      </field>
+    </record>
+
+    <record id="res_partner_view_tree" model="ir.ui.view">
+    <field name="name">Res Partner</field>
+    <field name="model">res.partners</field>
+    <field name="arch" type="xml">
+      <tree>
+            <field name="email"/>
+            <field name="name"/>
+            <field name="date" />
+      </tree>
+    </field>
+    </record>
+
+    </data>
+</odoo>

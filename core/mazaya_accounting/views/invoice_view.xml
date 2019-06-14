@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record id="mazaya_invoice" model="ir.ui.view">
+            <field name="name">mazaya.account.invoice.form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//page[@name='other_info']" position="before">
+                        <page string='Power Invoice Configuration'>
+                            <group>
+                                <group>
+
+                                    <label for="tax_field_per" string="Basic Tax Percentage"/>
+                                    <div>
+                                        <field name="tax_field_per" class="oe_inline"/>
+                                        % =
+                                        <field name="tax_field" class="oe_inline"/>
+                                    </div>
+
+                                    <label for="wires_per" string="Wires Percentage"/>
+                                    <div>
+                                        <field name="wires_per" class="oe_inline"/>
+                                        % =
+                                        <field name="wires" class="oe_inline"/>
+                                    </div>
+
+                                    <label for="transportation_per" string="Transport Percentage"/>
+                                    <div>
+                                        <field name="transportation_per" class="oe_inline"/>
+                                        % =
+                                        <field name="transportation" class="oe_inline"/>
+                                    </div>
+
+                                    <label for="construction_per" string="Construct Percentage"/>
+                                    <div>
+                                        <field name="construction_per" class="oe_inline"/>
+                                        % =
+                                        <field name="construction" class="oe_inline"/>
+                                    </div>
+
+                                    <label for="guarantee_per" string="Guarantee Percentage"/>
+                                    <div>
+                                        <field name="guarantee_per" class="oe_inline"/>
+                                        % =
+                                        <field name="guarantee" class="oe_inline"/>
+                                    </div>
+
+                                    <field name="invoice_devices" string=">> Devices"/>
+
+                                    <label for="table_tax_per" string="Table Tax Percentage"/>
+                                    <div>
+                                        <field name="table_tax_per" class="oe_inline"/>
+                                        % =
+                                        <field name="table_tax" class="oe_inline"/>
+                                    </div>
+                                    <field name="total_with_table_tax" string=">> Total with table tax"/>
+                                    <field name="total_services" string=">> All Services"/>
+                                    <field name="total_with_services" string=">> Total With Services"/>
+
+                                    <label for="added_value_tax_per" string="Added Value Tax Percentage"/>
+                                    <div>
+                                        <field name="added_value_tax_per" class="oe_inline"/>
+                                        % =
+                                        <field name="added_value_tax" class="oe_inline"/>
+                                    </div>
+
+                                    <field name="total_invoice" string=">> TOTAL INVOICE"/>
+
+                                </group>
+                            </group>
+
+                        </page>
+                    </xpath>
+                    <xpath expr="//field[@name='amount_total']" position="after">
+                        <button type="object" name="print_test" string="Update Power Invoice" class="oe_highlight"/>
+                    </xpath>
+
+
+                </data>
+            </field>
+        </record>
+    </data>
+</odoo>

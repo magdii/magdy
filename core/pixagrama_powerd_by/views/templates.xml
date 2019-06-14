@@ -1,0 +1,30 @@
+<odoo>
+    <data>
+        <template id="layout_FC" inherit_id="web.login_layout">
+            <xpath expr="//div" position="replace">
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3 o_database_list">
+                        <div class="text-center">
+                            <img t-attf-src="/web/binary/company_logo{{ '?dbname='+db if db else '' }}"/>
+                        </div>
+                        <t t-raw="0"/>
+                        <div class="text-center" t-if="not disable_footer">
+                            <t t-if="not disable_database_manager">
+                                <a class="" href="/web/database/manager">Manage Databases</a> |
+                            </t>
+                            <a href="https://www.pixagrama.com" target="_blank">Powered by <span>Pixagrama</span></a>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </template>
+        <template id="footer_layout" inherit_id="web.menu_secondary">
+            <xpath expr="//div[2]" position="replace">
+                <div class="o_sub_menu_footer">
+                    Powered by <a href="https://www.pixagrama.com" target="_blank"><span>Pixagrama</span></a>
+                </div>
+            </xpath>
+        </template>
+
+    </data>
+</odoo>
